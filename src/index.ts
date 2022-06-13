@@ -286,6 +286,11 @@ export default function loader(
       .join(',')}])`
   }
 
+  // Attach moduleIdentifier for SSR preload hints generation
+  if (isServer) {
+    code += `\nscript.__moduleIdentifier = "${hash(loaderContext.request)}"`
+  }
+
   if (needsHotReload) {
     code += genHotReloadCode(id, templateRequest)
   }
